@@ -1,1 +1,2 @@
-Wait Code
+sudo pacman -Sy
+wait code
