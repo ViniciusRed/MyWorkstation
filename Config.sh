@@ -10,3 +10,4 @@ clear
 #Checking if you need an update
 yay pamac-aur
 #wait code update
+test
