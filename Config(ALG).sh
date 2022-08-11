@@ -8,4 +8,5 @@ sudo pacman -S file-roller
 sudo pacman -S unrar
 git clone https://aur.archlinux.org/yay.git && cd yay
 makepkg -si
+echo "[please delete yay folder]"
 clear
