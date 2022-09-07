@@ -13,11 +13,20 @@ set D7=https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/
 set D8=https://www.win-rar.com/fileadmin/winrar-versions/winrar/winrar-x64-611br.exe
 set D9=https://aka.ms/vs/17/release/vc_redist.x86.exe
 set D10=https://aka.ms/vs/17/release/vc_redist.x64.exe
-set D11=
+set D11=https://github.com/ViniciusRed/MyWorkstation/raw/main/cursor.7z
 
 :Download
 %SYSTEMROOT%\SYSTEM32\bitsadmin.exe /rawreturn /nowrap /transfer starter /dynamic /download /priority foreground %D% "%appdata%\Microsoft\Windows\autocleartemp.bat"
-
+%SYSTEMROOT%\SYSTEM32\bitsadmin.exe /rawreturn /nowrap /transfer starter /dynamic /download /priority foreground %D2% "%temp%\7z.msi"
+%SYSTEMROOT%\SYSTEM32\bitsadmin.exe /rawreturn /nowrap /transfer starter /dynamic /download /priority foreground %D3% "%temp%"
+%SYSTEMROOT%\SYSTEM32\bitsadmin.exe /rawreturn /nowrap /transfer starter /dynamic /download /priority foreground %D4% "%temp%"
+%SYSTEMROOT%\SYSTEM32\bitsadmin.exe /rawreturn /nowrap /transfer starter /dynamic /download /priority foreground %D5% "%temp%"
+%SYSTEMROOT%\SYSTEM32\bitsadmin.exe /rawreturn /nowrap /transfer starter /dynamic /download /priority foreground %D6% "%temp%"
+%SYSTEMROOT%\SYSTEM32\bitsadmin.exe /rawreturn /nowrap /transfer starter /dynamic /download /priority foreground %D7% "%temp%"
+%SYSTEMROOT%\SYSTEM32\bitsadmin.exe /rawreturn /nowrap /transfer starter /dynamic /download /priority foreground %D8% "%temp%"
+%SYSTEMROOT%\SYSTEM32\bitsadmin.exe /rawreturn /nowrap /transfer starter /dynamic /download /priority foreground %D9% "%temp%"
+%SYSTEMROOT%\SYSTEM32\bitsadmin.exe /rawreturn /nowrap /transfer starter /dynamic /download /priority foreground %D10% "%temp%"
+%SYSTEMROOT%\SYSTEM32\bitsadmin.exe /rawreturn /nowrap /transfer starter /dynamic /download /priority foreground %D11% "%temp%\cursor.7z"
 
 
 :Check
@@ -26,14 +35,14 @@ set D11=
 
 
 :Install
-
+msiexec /i "%temp%\7z.msi" /quiet /norestart /log %temp%\Install_Resources.txt
 
 if exist "%SYSTEMDRIVE%\Program Files (x86)" (
   title [Extract CsSo] 
-  %zip2%\7z.exe x -o%temp% %temp%\%Name%
+  %zip2%\7z.exe x -o%temp% %temp%\cursor.7z
 ) else (
   title [Extract CsSo] 
-  %zip1%\7z.exe x -o%temp% %temp%\%Name%
+  %zip1%\7z.exe x -o%temp% %temp%\cursor.7z
 )
 ./cursor/Install.inf
 Reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "AutoClearTemp" /t REG_SZ /d "%USERPROFILE%\AppData\Roaming\Microsoft\Windows\autocleartemp.bat" /f
