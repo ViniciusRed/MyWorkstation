@@ -1,0 +1,43 @@
+#!/bin/sh
+echo "[Attention sudo command being used]"
+
+pkgs="file-roller unrar"
+make="pamac-aur"
+
+install() {
+    sudo pacman --noconfirm -Syu
+    sudo pacman --asdeps  --needed --noconfirm -S $pkgs
+}
+
+timesync() {
+ timedatectl set-local-rtc 0 #off to sync time
+ timedatectl set-timezone America/Sao_Paulo
+ sudo timedatectl set-ntp true
+ timedatectl set-local-rtc 1
+}
+
+build() {
+d=${BUILDDIR:-$PWD}
+for p in ${@##-*}
+do
+cd "$d"
+curl "https://aur.archlinux.org/cgit/aur.git/snapshot/$p.tar.gz" |tar xz
+cd "$p"
+makepkg -si
+mv *pkg.tar.zst $d
+rm -r "$d/$p"
+done
+}
+
+git() {
+git clone https://github.com/AdnanHodzic/auto-cpufreq.git
+cd auto-cpufreq && sudo ./auto-cpufreq-installer
+sudo auto-cpufreq --install
+}
+
+install
+timesync
+build $make
+git
+clear
+echo "[Please restart Arch Linux]"
